@@ -17,7 +17,7 @@ public class PlayerCarController : MonoBehaviour {
 	void Start () {
 		road_number = 3;
 		isTransition = false;
-		transitionTime = 0.5f;
+		transitionTime = 0.5f * 0.1f / speed;
 		transition_PosX = 0f;
 		transition_PosY = 0f;
 		transition_ScaleX = 0f;
@@ -25,27 +25,36 @@ public class PlayerCarController : MonoBehaviour {
 		transitionTimer = 0f;
 	}
 
-	void OnGUI() {
-		Event e = Event.current;
-		if (e.isKey)
-			;
-			//Debug.Log("Detected key code: " + e.keyCode);
-		
-	}
-
 	void Update () {
+		float trans_x = speed;
+		float trans_y = 0f;
+		float scale_x = 0f;
+		float scale_y = 0f; 
+
 		if (isTransition) {
 			transitionTimer += Time.deltaTime;
 			timeKoeff = Time.deltaTime / transitionTime;
-			Debug.Log("Up" + transitionTimer,this);
+
+			trans_x += timeKoeff * transition_PosX;
+			trans_y += timeKoeff * transition_PosY;
+			scale_x = timeKoeff * transition_ScaleX;
+			scale_y = timeKoeff * transition_ScaleY;
 		}
 
-		transform.Translate (new Vector3 (speed + timeKoeff * transition_PosX, timeKoeff * transition_PosY, 0f));
-		transform.localScale += new Vector3(timeKoeff * transition_ScaleX, timeKoeff * transition_ScaleY, 0);
+		transform.Translate (new Vector3 (trans_x, trans_y, 0f));
+		transform.localScale += new Vector3(scale_x, scale_y, 0f);
 		camera.transform.Translate(new Vector3 (speed, 0f, 0f));
 
+		if (road_number == 1 && transform.position.y > 1.94f) {
+			//transform.position.y = 1.94f;
+			transform.localPosition = new Vector3(transform.position.x, 1.94f, transform.position.z);
+		}
+		if (road_number == 3 && transform.position.y < -1.79f) {
+			//transform.position.y = -1.79f;
+			transform.localPosition = new Vector3(transform.position.x, -1.79f, transform.position.z);
+		}
+
 		if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) {
-			Debug.Log("Up",this);
 			if (!isTransition && road_number == 3) {
 				transition_PosX = 1.14f;
 				transition_PosY = 2.04f;
@@ -67,7 +76,6 @@ public class PlayerCarController : MonoBehaviour {
 		}
 
 		if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) {
-			Debug.Log("Up",this);
 			if (!isTransition && road_number == 2) {
 				transition_PosX = -1.14f;
 				transition_PosY = -2.04f;
@@ -95,10 +103,6 @@ public class PlayerCarController : MonoBehaviour {
 			transition_ScaleY = 0f;
 			transitionTimer = 0f;
 			isTransition = false;
-		}
-
-		if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) {
-			Debug.Log("Down",this);
 		}
 
 		if (Input.GetKey(KeyCode.Escape)) {
