@@ -3,6 +3,7 @@
 # =============== #
 Temp/
 Library/
+**/*.meta
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
@@ -30,3 +31,4 @@ obj/
 ehthumbs.db
 Thumbs.db
 /.gitignore
+
