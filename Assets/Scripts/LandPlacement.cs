@@ -3,9 +3,7 @@ using System.Collections;
 using UnityEditor;
 
 public class LandPlacement : MonoBehaviour {
-	public GameObject frontLand;
-	public GameObject midLand;
-	public GameObject backLand;
+	public GameObject[] roadList;
 	public GameObject car;
 	private Vector3 landNewPosition = new Vector3(0,0,0);
 	public static LandPlacement Inst = new LandPlacement();
@@ -13,25 +11,31 @@ public class LandPlacement : MonoBehaviour {
 	void Start () {
 		landSprites = Resources.LoadAll<Sprite>("Images/Lands");
 	}
-	private void ShuffleLands()
+	private void ShuffleList(GameObject[] list)
 	{
-		GameObject temp=backLand;
-		backLand = midLand;
-		midLand = frontLand;
-		frontLand = temp;
+		GameObject temp;
+		for (int i=0; i<list.Length-1; i++) 
+		{
+			temp=list[i+1];
+			list[i+1]=list[i];
+			list[i]=temp;
+		}
 	}
-	private void PlaceNextLand()
+	private void PlaceNextLand(GameObject[] list)
 	{
-		float offset =GetSpriteWidth (backLand)+ GetSpriteWidth (midLand) + GetSpriteWidth (frontLand);
-		float pos = backLand.transform.position.x;
+		float offset = 0;
+		foreach (GameObject obj in list)
+			offset += GetSpriteWidth (obj);
+
+		float pos = list[0].transform.position.x;
 		landNewPosition.x = (pos + offset);
-		backLand.transform.position =landNewPosition;
-		backLand.GetComponent<SpriteRenderer> ().sprite =GetRandomTexture();
-		ShuffleLands ();
+		list[0].transform.position =landNewPosition;
+		list[0].GetComponent<SpriteRenderer> ().sprite =GetRandomTexture();
+		ShuffleList(list);
 	}
 	private Sprite GetRandomTexture()
 	{
-		int someRandomShit = Random.Range(0, 2); 
+		int someRandomShit = Random.Range(0, landSprites.Length); 
 		return landSprites[someRandomShit]; 
 	}
 
@@ -41,7 +45,7 @@ public class LandPlacement : MonoBehaviour {
 	}
 	void Update() 
 	{
-		if (car.transform.position.x > midLand.transform.position.x)
-			PlaceNextLand ();
+		if (car.transform.position.x > roadList[1].transform.position.x)
+			PlaceNextLand (roadList);
 	}
 }
