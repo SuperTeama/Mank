@@ -1,0 +1,5 @@
+<Profile>
+  <String id="Name">TestName</String>
+  <String id="Money">100</String>
+  <String id="Sex">true</String>
+</Profile>

@@ -14,6 +14,11 @@ public class PlayerCarController : MonoBehaviour {
 	private float		transitionTimer;
 	private float		timeKoeff;
 
+	void OnGUI () {
+		GUI.Box (new Rect (0, 0, 150, 25), "Name: " + Profile.Inst.GetValue("Name"));
+		GUI.Box (new Rect (0, 25, 150, 25), "Money: " + Profile.Inst.GetValue("Money"));
+		GUI.Box (new Rect (0, 50, 150, 25), "Sex: " + ((Profile.Inst.GetBoolValue("Sex"))?"Male":"Female"));
+	}
 	void Start () {
 		road_number = 3;
 		isTransition = false;
@@ -23,6 +28,7 @@ public class PlayerCarController : MonoBehaviour {
 		transition_ScaleX = 0f;
 		transition_ScaleY = 0f;
 		transitionTimer = 0f;
+		Profile.Inst.SetValue ("123", "456");
 	}
 
 	void Update () {
@@ -55,6 +61,7 @@ public class PlayerCarController : MonoBehaviour {
 		}
 
 		if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) {
+			Profile.Inst.SaveProfile();
 			if (!isTransition && road_number == 3) {
 				transition_PosX = 1.14f;
 				transition_PosY = 2.04f;
