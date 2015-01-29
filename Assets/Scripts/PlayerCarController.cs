@@ -15,8 +15,8 @@ public class PlayerCarController : MonoBehaviour {
 	private float		timeKoeff;
 
 	void OnGUI () {
-		GUI.Box (new Rect (0, 0, 150, 25), "Name: " + Profile.Inst.GetValue("Name"));
-		GUI.Box (new Rect (0, 25, 150, 25), "Money: " + Profile.Inst.GetValue("Money"));
+		GUI.Box (new Rect (0, 0, 150, 25), "Name: " + Profile.Inst.GetStringValue("Name"));
+		GUI.Box (new Rect (0, 25, 150, 25), "Money: " + Profile.Inst.GetIntValue("Money"));
 		GUI.Box (new Rect (0, 50, 150, 25), "Sex: " + ((Profile.Inst.GetBoolValue("Sex"))?"Male":"Female"));
 	}
 	void Start () {
@@ -28,7 +28,10 @@ public class PlayerCarController : MonoBehaviour {
 		transition_ScaleX = 0f;
 		transition_ScaleY = 0f;
 		transitionTimer = 0f;
-		Profile.Inst.SetValue ("123", "456");
+		Profile.Inst.SetStringValue ("test_id_string", "Test string");
+		Profile.Inst.SetIntValue ("test_id_int", 100500);
+		Profile.Inst.SetFloatValue ("test_id_float", 1.35f);
+		Profile.Inst.SetBoolValue ("test_id_bool", false);
 	}
 
 	void Update () {
