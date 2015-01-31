@@ -118,7 +118,12 @@ public class PlayerCarController : MonoBehaviour {
 		if (Input.GetKey(KeyCode.Escape)) {
 			Application.Quit();
 		}
-
+		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.D)) {
+			speed*=1.01f;
+				}
+		if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.A)) {
+			speed*=0.99f;
+		}
 		if (Input.GetKey(KeyCode.R)) {
 			Application.LoadLevel(Application.loadedLevel);
 		}

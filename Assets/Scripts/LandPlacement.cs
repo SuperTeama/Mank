@@ -10,16 +10,15 @@ public class LandPlacement : MonoBehaviour {
 	public static LandPlacement Inst = new LandPlacement();
 
 	void Start () {
-		carTravel = 0;
 	}
 
 	void Update() 
 	{
-		carTravel = car.transform.position.x - carTravel;
 		foreach (GOOwner govner in scheme)
 		{
+
+			govner.Lag(car.GetComponent<PlayerCarController>().speed);
 			govner.CheckThisPosition (car.transform.position.x);
-			govner.Lag(0.1f);
 		}
 	}
 }

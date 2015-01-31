@@ -11,11 +11,11 @@ public class GOOwner : MonoBehaviour {
 	}
 	public void PlaceNextLand()
 	{
-		float offset = 0;
+		float offset = 0f;
 		foreach (GameObject obj in objectList)
-			offset += GetSpriteWidth (obj);
+			offset += GetSpriteWidth (obj)-0.01f;
 
-		objectList [0].transform.Translate(offset,0f,0f);
+		objectList[0].transform.Translate(offset,0f,0f);
 		objectList[0].GetComponent<SpriteRenderer> ().sprite =GetRandomTexture();
 		ShuffleList();
 	}
