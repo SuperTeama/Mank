@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 public class GOOwner : MonoBehaviour {
+	public float braking;
 	public GameObject[] objectList;
 	public string path;
-	public GameObject[] GetGOList()
+	public void Lag(float x)
 	{
-		return objectList;
+		foreach (GameObject obj in objectList) 
+			obj.transform.Translate(x*braking,0f,0f);
 	}
-
 	public void PlaceNextLand()
 	{
 		float offset = 0;
 		foreach (GameObject obj in objectList)
 			offset += GetSpriteWidth (obj);
-		Vector3 pos = objectList [0].transform.position;
-		pos.x += offset;
-		objectList[0].transform.position = pos;
+
+		objectList [0].transform.Translate(offset,0f,0f);
 		objectList[0].GetComponent<SpriteRenderer> ().sprite =GetRandomTexture();
 		ShuffleList();
 	}
