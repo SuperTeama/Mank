@@ -1,5 +1,9 @@
 <Profile>
   <String id="Name">efaefafaf</String>
+  <String id="test_id_string">Test string</String>
   <Int id="Money">101</Int>
+  <Int id="test_id_int">100500</Int>
+  <Float id="test_id_float">1.35</Float>
   <Bool id="Sex">True</Bool>
+  <Bool id="test_id_bool">False</Bool>
 </Profile>
