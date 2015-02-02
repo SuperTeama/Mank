@@ -13,7 +13,7 @@ public class GOOwner : MonoBehaviour {
 	{
 		float offset = 0f;
 		foreach (GameObject obj in objectList)
-			offset += GetSpriteWidth (obj)-0.01f;
+			offset += GetSpriteWidth (obj);
 
 		objectList[0].transform.Translate(offset,0f,0f);
 		objectList[0].GetComponent<SpriteRenderer> ().sprite =GetRandomTexture();
