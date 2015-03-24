@@ -1,15 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spawner : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+public class Spawner {
+	public enum SpawnerType {
+		SIMPLE_SPAWNER = 0,
+		RANDOM_SPAWNER = 1,
 	}
 }
