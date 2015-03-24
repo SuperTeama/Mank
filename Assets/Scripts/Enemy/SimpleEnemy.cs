@@ -9,7 +9,7 @@ public class SimpleEnemy : MonoBehaviour {
 
 	void Start () {
 		type = Enemy.EnemyType.SIMPLE_ENEMY;
-		speed = 0.01f;
+		speed = Random.Range(0.01f, 0.03f);
 		isDie = false;
 		target = GameObject.FindWithTag("Player");
 	}

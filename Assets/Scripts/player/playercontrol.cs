@@ -1,59 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 public class playercontrol : MonoBehaviour {
-	float maxspeed;
-	float curMoveSpeed;
-	float accelerationTime;
-	bool moving = false;
-	Vector2 nullVector = new Vector2(0f,0f);
-	Vector2 dir;
+
 	void Start () {
-		dir = nullVector;
-		maxspeed= 0.1f;
-		curMoveSpeed = 0.0f;
-		accelerationTime =0.2f;
+
 	}
 	
 	void Update ()
 	{
-		dir = GetDirection();
-		moving = (dir != nullVector);
-
-		if (moving)
-		{
-			curMoveSpeed += maxspeed * (Time.deltaTime / accelerationTime);
-			curMoveSpeed = Math.Min (maxspeed, curMoveSpeed);
-		}
-		else 
-			curMoveSpeed = 0;
-
-		CalcMoveSpeed ();
-
-		GetComponent<Transform>().Translate(dir*curMoveSpeed);
-		transform.Rotate (Input.mousePosition); // хуйня какая то
+		LookAtMouse();
 	}
-	void  CalcMoveSpeed()
-	{
 
+	private void LookAtMouse() {
+		Vector3 mousePosition = Input.mousePosition;
+		//mousePosition.z = transform.position.z - Camera.main.transform.position.z; // это только для перспективной камеры необходимо
+		mousePosition = Camera.main.ScreenToWorldPoint(mousePosition); //положение мыши из экранных в мировые координаты
+		var angle = Vector2.Angle(Vector2.right, mousePosition - transform.position);//угол между вектором от объекта к мыше и осью х
+		transform.eulerAngles = new Vector3(0f, 0f, transform.position.y < mousePosition.y ? angle : -angle);//немного магии на последок
 	}
-	Vector2 GetDirection()
-	{
-		Vector2 res = nullVector;
-		if (Input.GetKey (KeyCode.D)) {
-			res.x+=1f;
-		}
-		if (Input.GetKey (KeyCode.A)) {
-			res.x-=1f;
-		}
-		if (Input.GetKey (KeyCode.W)) {
-			res.y+=1f;
-		}
-		if (Input.GetKey (KeyCode.S)) {
-			res.y-=1f;
-		}
-		return res.normalized;
-	}
-	
 }
