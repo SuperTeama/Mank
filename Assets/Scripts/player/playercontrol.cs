@@ -13,8 +13,11 @@ public class playercontrol : MonoBehaviour {
 		LookAtMouse();
 
 		if (Input.GetMouseButtonDown (0)) {
-			ShotWindstrike();
-		}
+						ShotWindstrike ();
+			}else 
+		if (Input.GetMouseButtonDown (1)) {
+			StrongAttack();	
+			}
 	}
 
 	private void LookAtMouse() {
@@ -27,5 +30,14 @@ public class playercontrol : MonoBehaviour {
 
 	private void ShotWindstrike() {
 		Instantiate(windStrike, transform.position, Quaternion.identity);
+	}
+	private void StrongAttack()	{
+		int times = 10;
+		do
+		{
+		Instantiate(windStrike, transform.position, Quaternion.identity);
+			times--;
+		}
+		while (times>0);
 	}
 }

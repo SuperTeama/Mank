@@ -9,7 +9,7 @@ public class SimpleEnemy : MonoBehaviour {
 
 	void Start () {
 		type = Enemy.EnemyType.SIMPLE_ENEMY;
-		speed = Random.Range(0.01f, 0.03f);
+		speed = Random.Range(1.5f, 2.5f);
 		isDie = false;
 		target = GameObject.FindWithTag("Player");
 	}
@@ -29,7 +29,7 @@ public class SimpleEnemy : MonoBehaviour {
 	void Update () {
 		Vector3 newPosition = target.transform.position - gameObject.transform.position;
 		newPosition.Normalize();
-		newPosition *= speed;
+		newPosition *= speed*Time.deltaTime;
 		transform.Translate(newPosition);
 	}
 
