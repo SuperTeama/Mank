@@ -6,6 +6,7 @@ public class Windstrike : MonoBehaviour {
 	private float speed;
 	private float timer;
 	private Vector2 recoil;
+
 	void Start () {
 		timer = 0f;
 		transform.rotation = GameObject.Find ("Player").transform.rotation;
@@ -13,8 +14,8 @@ public class Windstrike : MonoBehaviour {
 		Vector2 mouse = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Vector2 player = (transform.position);
 		float grad = 3.14f / 90f;
-		recoil.x = (float)Random.Range(-15, 15)*grad;
-		recoil.y = (float)Random.Range(-15, 15)*grad;
+		recoil.x = (float)Random.Range(-15, 15) * grad;
+		recoil.y = (float)Random.Range(-15, 15) * grad;
 
 
 		direction = (mouse - player) + recoil.normalized;
@@ -25,9 +26,10 @@ public class Windstrike : MonoBehaviour {
 
 	void Update () {
 		speed *= 1.03f;
+		transform.position += (direction * speed * Time.deltaTime);
+
 		timer += Time.deltaTime;
-		transform.position+=(direction*speed*Time.deltaTime);
-		if (timer > 5.0f)
+		if (timer > 3.0f)
 			gameObject.tag = "to_delete";
 	}
 }

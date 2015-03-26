@@ -2,22 +2,33 @@
 using System.Collections;
 
 public class playercontrol : MonoBehaviour {
+	private float recoveryWindstrikeTime;
+	private float shotWindstrikeTimer;
+	private float recoveryStrongAttackTime;
+	private float shotStrongAttackTimer;
+
 	public GameObject windStrike;
 
 	void Start () {
+		recoveryWindstrikeTime = 0.2f;
+		shotWindstrikeTimer = 0.2f;
 
+		recoveryStrongAttackTime = 3f;
+		shotStrongAttackTimer = 3f;
 	}
 	
 	void Update ()
 	{
 		LookAtMouse();
 
+		shotWindstrikeTimer += Time.deltaTime;
+		shotStrongAttackTimer += Time.deltaTime;
+
 		if (Input.GetMouseButtonDown (0)) {
-						ShotWindstrike ();
-			}else 
-		if (Input.GetMouseButtonDown (1)) {
+			ShotWindstrike ();
+		}else if (Input.GetMouseButtonDown (1)) {
 			StrongAttack();	
-			}
+		}
 	}
 
 	private void LookAtMouse() {
@@ -29,15 +40,22 @@ public class playercontrol : MonoBehaviour {
 	}
 
 	private void ShotWindstrike() {
+		if (shotWindstrikeTimer < recoveryWindstrikeTime)
+			return;
+
 		Instantiate(windStrike, transform.position, Quaternion.identity);
+
+		shotWindstrikeTimer = 0;
 	}
-	private void StrongAttack()	{
-		int times = 10;
-		do
-		{
-		Instantiate(windStrike, transform.position, Quaternion.identity);
-			times--;
+
+	private void StrongAttack()	{		
+		if (shotStrongAttackTimer < recoveryStrongAttackTime)
+			return;
+
+		for (int i=10; i>0; i--) {
+			Instantiate(windStrike, transform.position, Quaternion.identity);
 		}
-		while (times>0);
+
+		shotStrongAttackTimer = 0f;
 	}
 }

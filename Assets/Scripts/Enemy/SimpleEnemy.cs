@@ -21,6 +21,9 @@ public class SimpleEnemy : MonoBehaviour {
 			GameObject.Find("EnemySystem").GetComponent<EnemySystem>().IncrementScore(1);
 			isDie = true;
 
+			if (coll.gameObject.tag=="Player")
+				GameObject.Find("EnemySystem").GetComponent<EnemySystem>().AddHealth(-1);
+
 			if (coll.gameObject.tag=="playerShot")
 				coll.gameObject.tag = "to_delete";
 		}
